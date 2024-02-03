@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: 1.22.0-rev1
+  version: v1.22
   title: Compliance MiniDashboard API
   description: >
     The MiniDashboard API is a modern REST API based on the OpenAPI
