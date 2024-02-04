@@ -35,9 +35,9 @@ Now, open https://editor.swagger.io/ in a Web browser and paste the `step1.yaml`
 
 > Note that there are many OpenAPI renderer vendors available to you when ready to go, such as [StopLight Elements](https://elements-demo.stoplight.io/?spec=https://raw.githubusercontent.com/ObjectIsAdvantag/DEVWKS-2525/main/step1.yaml#/operations/getOrganization)
 
-Looks great... but this is manual eye screening for now whether the OpebAPI document is correct or not. 
+Looks great... but this requires manual eye-screening of the yaml and rendered documentation to identify how complete and accurate is the OpenAPI document.
 
-Let's now look into some automation opportunities...
+In the rest of this lab, we will look into automation opportunities...
 
 
 ## Step 2
@@ -49,6 +49,8 @@ Please run the command below:
 spectral lint step2.yaml --verbose --ruleset rulesets/spectral.yaml 
 ```
 
+![spectral command output](/img/step2_command.png)
+
 4 warnings are showed with the corresponding lines in the document.
 
 > Note that Spectral lints the OpenAPI document using a default 'oas' ruleset that includes 52 checks.
@@ -57,6 +59,8 @@ Let's look at the rule that is failing: ['operation-tag-defined'](
 https://docs.stoplight.io/docs/spectral/4dec24461f3af-open-api-rules#operation-tag-defined)
 
 Scroll down at the bottom of the step2.yaml file and note that the declaration of the tags have been commented.
+
+![OpenAPI document commented](/img/step2_openapi.png)
 
 
 ## Step 3
@@ -68,6 +72,8 @@ Please run the command:
 ```shell
 spectral lint step3.yaml --verbose --ruleset rulesets/spectral.yaml 
 ```
+
+![spectral command output](/img/step3_command.png)
 
 There are no more errors found by spectral.
 
@@ -88,6 +94,8 @@ Please run the command:
 spectral lint step4.yaml --verbose --ruleset rulesets/semver.yaml 
 ```
 
+![spectral command output](/img/step4_command.png)
+
 A warning informs us that the version does not adhere to semver.
 
 Let's check how we can create custom rules.
@@ -96,13 +104,17 @@ Please open the file `rulesets/semver.yaml`.
 
 Note that the rule has a severity of `warning`
 
+![semver rule](/img/step4_semver_rule.png)
+
 Let's check if the command execution got an exit status of 'error' so that we could automatically detect this along our CI/CD pipeline?
 
 ```shell
 echo "exit status:" $?
 ```
 
-It's a no. The command did NOT fail because the rule has a severity of 'warning' and not 'error'.
+We are getting an exit status of '0', so success.
+
+The command did NOT fail because the 'semver' rule has a severity of 'warning' and not 'error'.
 
 We have 2 options at this stage:
 
@@ -151,6 +163,8 @@ Please type the command:
 spectral lint step6.yaml --verbose --ruleset rulesets/contract.yaml --format pretty
 ```
 
+![spectral command output](/img/step6_command.png)
+
 There is 1 error identified and a warning with 4 occurences.
 
 Let's look at these findings in details:
@@ -189,7 +203,9 @@ Run the following command:
 spectral lint step8.yaml --verbose --ruleset rulesets/cicd.yaml --format pretty
 ```
 
-Spotted: 2 findings:
+![spectral command output](/img/step8_command.png)
+
+Spotted! 2 findings here:
 1. the semantic versioning did not get correctly applied
 1. errors were not declared for the new 'PUT' operation
 
@@ -220,8 +236,10 @@ Run the following command:
 ```shell
 oasdiff changelog step7.yaml step10.yaml --format text
 ```
- 
+
 The output shows you the updates and spots a breaking change.
+
+![oasdiff command output](/img/step10_command.png)
 
 In total it's more than 250 checks that are executed: `oasdiff checks | wc -l`
 as documented here: https://github.com/Tufin/oasdiff/blob/main/BREAKING-CHANGES-EXAMPLES.md
