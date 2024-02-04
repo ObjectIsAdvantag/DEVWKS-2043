@@ -57,7 +57,8 @@ spectral lint step2.yaml --verbose --ruleset rulesets/spectral.yaml
 Let's look at the rule that is failing: ['operation-tag-defined'](
 https://docs.stoplight.io/docs/spectral/4dec24461f3af-open-api-rules#operation-tag-defined)
 
-Scroll down at the bottom of the step2.yam file and note we have commented the tags.
+Scroll down at the bottom of the step2.yaml file and note that the declaration of the tags have been commented.
+
 
 ## Step 3
 
@@ -71,9 +72,10 @@ spectral lint step3.yaml --verbose --ruleset rulesets/spectral.yaml
 
 There are no more errors found by spectral.
 
-Cool, the document is valid when considering the OpenAPI specifications, here OAS v3.0.
+Cool! The OpenAPI document is valid against the OpenAPI specifications.
 
-we will now add custom rules to automatically check the OpenAPI document meets our own internal standards.
+We will now add custom rules to automatically check that the OpenAPI document meets our own internal standards.
+
 
 ## Step 4
 
@@ -98,21 +100,21 @@ Note that the rule has a severity of `warning`
 Let's check if the command execution got an exit status of 'error' so that we could automatically detect this along our CI/CD pipeline.
 
 ```shell
-echo $? 
+echo "exit status:" $?
 ```
 
 Nope, the command did not fail because no issue with a severity level of 'error' was found.
 
 We have 2 options at this stage:
-1. consider that warning are failures: `spectral lint step4.yaml --verbose --ruleset rulesets/semver.yaml --fail-severity warn; echo ""; echo "exit status:" $?`
-2. or change the severity of the rule from warning to error: `spectral lint step4.yaml --verbose --ruleset rulesets/semver-error.yaml; echo ""; echo "exit status: "$?`
+1. consider that warning are failures: `spectral lint step4.yaml --verbose --ruleset rulesets/semver.yaml --fail-severity warn; echo "exit status:" $?`
+2. or change the severity of the rule from warning to error: `spectral lint step4.yaml --verbose --ruleset rulesets/semver-error.yaml; echo "exit status: "$?`
 
-Congrats, we are getting an exit status of 1 so that we can automatically reject non compliant OpenAPI documents.
+Congrats, we are getting an exit status of '1' so that we can automatically reject non compliant OpenAPI documents along our CI/CD pipelines.
 
 
 ## Step 5
 
-Let's fix the semantic version and see that a valid document would not be rejected.
+Let's now fix the semantic version and see that a valid document would not be rejected.
 
 We have updated the version number to '1.22.0-4521' as shown with the command: `diff step4.yaml step5.yaml`.
 
@@ -134,23 +136,24 @@ Let's now evaluate the quality of the API contract:
 - errors not documented
 - missing identifier for some operations
 
-Please type the commande:
+Please type the command:
 
 ```shell
 spectral lint step6.yaml --verbose --ruleset rulesets/contract.yaml --format pretty
 ```
 
-There is 1 error identified and a warning showing 4 times.
+There is 1 error identified and a warning with 4 occurences.
 
 Let's look at these findings in details:
-- [line 119](./step6.yaml#119): the response is not described
-- [line 114](./step6.yaml#147) and 3 others: there is no error defined
+- [line 119](step6.yaml#L119): the response is not described
+- [line 114](step6.yaml#L114) and 3 others: there is no error defined
+
 
 ## Step 7
 
 We ask the team to make the necessary changes: `diff step6.yaml step7.yaml`
 
-Let's now evaluate the contract once we have made the fixes:
+Let's now evaluate the contract after these changes have been reflected:
 
 ```shell
 spectral lint step7.yaml --verbose --ruleset rulesets/contract.yaml --format pretty
@@ -158,7 +161,7 @@ spectral lint step7.yaml --verbose --ruleset rulesets/contract.yaml --format pre
 
 > Note that the contract ruleset needs to go beyond the provided spectral function.
 
-In vscode, open the [contract.yaml](rulesets/contract.yaml) and observe the fnuctions that have been declared at the top. The functions are defined in the `/functions` folder.
+In Visual Studio Code, open the [contract.yaml](rulesets/contract.yaml) and observe the fnuctions that have been declared at the top. The functions are defined in the `/functions` folder.
 
 Let's now look into a real life example of an API lifecycle.
 
@@ -179,7 +182,7 @@ spectral lint step8.yaml --verbose --ruleset rulesets/cicd.yaml --format pretty
 
 Spotted: 2 findings:
 1. the semantic versioning did not get correctly applied
-2. some errors were not declared for a new 'PUT' operation which has been added.
+1. errors were not declared for the new 'PUT' operation
 
 Engineering is asked to provide a new OpenAPI document which will reflect the changes.
 
@@ -202,7 +205,7 @@ You can either open the file and compare, use a diff tool and compare OR use an 
 **Run the following command:**
 
 ```shell
-oasdiff changelog step7.yaml step9.yaml --format html > changelog.html
+oasdiff changelog step7.yaml step9.yaml --format text
 ```
  
 The output shows you the updates and spots a breaking change.
@@ -210,7 +213,7 @@ The output shows you the updates and spots a breaking change.
 In total it's more than 250 checks that are executed: `oasdiff checks | wc -l`
 as documented here: https://github.com/Tufin/oasdiff/blob/main/BREAKING-CHANGES-EXAMPLES.md
 
-Now what if you want to interrupt my CI/CD pipeline as soon as I detect a breaking change
+Now what if you want to interrupt the CI/CD pipeline as soon as a breaking change is detected
 
 ```shell
 oasdiff breaking step7.yaml step9.yaml --fail-on ERR; echo "exit status:" $?
