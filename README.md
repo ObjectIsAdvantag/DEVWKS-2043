@@ -1,8 +1,11 @@
-# Linting OpenAPI documents 
+# Linting OpenAPI documents
+
+This instructor-led lab will take you from zero to automatically analyzing OpenAPI documents and integrating into your CI/CD pipelines.
+
 
 ## Before we start
 
-You have cloned this repo and checked the spectral and oasdiff binaries are installed on your laptop.
+You have cloned this repo and have checked that the 'spectral' and 'oasdiff' binaries are available on your laptop:
 
 1. `git clone https://github.com/ObjectIsAdvantag/DEVWKS-2525`
 1. `spectral --version` should return 6.11.0 or beyond.
@@ -11,7 +14,7 @@ You have cloned this repo and checked the spectral and oasdiff binaries are inst
 
 ### Installing the CLIs
 
-The following tools are installed on your local machine
+If some of the binaries are not yet installed, please proceed as describe below:
 
 - [Spectral CLI](https://docs.stoplight.io/docs/spectral/b8391e051b7d8-installation): `npm install -g @stoplight/spectral-cli`
 - [oasdiff CLI](https://github.com/Tufin/oasdiff?tab=readme-ov-file#install-on-macos-windows-and-linux): select the binary for your laptop and drop it on your path
@@ -19,17 +22,18 @@ The following tools are installed on your local machine
 
 ## Step 1
 
+Let's discover the OpenAPI document that we will use for automated checks along this lab.
+
 Please open Visual Studio Code 
 
 1. `cd DEVWKS-2525`
 1. `code .`
 
+Please open the file named `step1.yaml` and paste then contents.
 
-Open https://editor.swagger.io/ in a Web browser
+Now, open https://editor.swagger.io/ in a Web browser and paste the `step1.yaml` contents into the editor.
 
-Paste the `step1.yaml` contents into the editor
-
-Note that there are many OpenAPI renderer vendors available to you when ready to go, such as [StopLight Elements](https://elements-demo.stoplight.io/?spec=https://raw.githubusercontent.com/ObjectIsAdvantag/DEVWKS-2525/main/step1.yaml#/operations/getOrganization)
+> Note that there are many OpenAPI renderer vendors available to you when ready to go, such as [StopLight Elements](https://elements-demo.stoplight.io/?spec=https://raw.githubusercontent.com/ObjectIsAdvantag/DEVWKS-2525/main/step1.yaml#/operations/getOrganization)
 
 Looks great... but this is manual eye screening for now whether the OpebAPI document is correct or not. 
 
@@ -38,26 +42,28 @@ Let's now look into some automation opportunities...
 
 ## Step 2
 
-**Run the command**
+We first want to check the syntax of the document is valid when considering the OpenAPI specifications.
+
+Pleae run the command below:
 
 ```shell
 spectral lint step2.yaml --verbose --ruleset rulesets/spectral.yaml 
 ```
 
-Spectral lints the OpenAPI document using its default ruleset consists which 52 rules documented at 
-https://docs.stoplight.io/docs/spectral/4dec24461f3af-open-api-rules
+4 warnings are showed with the corresponding lines in the document.
 
-Let's look for the rule that is failing: `operation-tag-defined`
-https://docs.stoplight.io/docs/spectral/4dec24461f3af-open-api-rules#operation-tag-defined
+> Note that Spectral lints the OpenAPI document using a default 'oas' ruleset that includes 52 checks.
 
+Let's look at the rule that is failing: ['operation-tag-defined'](
+https://docs.stoplight.io/docs/spectral/4dec24461f3af-open-api-rules#operation-tag-defined)
+
+Scroll down at the bottom of the step2.yam file and note we have commented the tags.
 
 ## Step 3
 
-Let's fix the warning that tags are not declared
+Let's now run the command again against the step3.yaml file where the tags have been globally declared.
 
-**Remove the comments at the bottom of the openapi.yaml and save the file**
-
-**And run the command again:**
+Please run the command:
 
 ```shell
 spectral lint step3.yaml --verbose --ruleset rulesets/spectral.yaml 
@@ -65,57 +71,60 @@ spectral lint step3.yaml --verbose --ruleset rulesets/spectral.yaml
 
 There are no more errors found by spectral.
 
+Cool, the document is valid when considering the OpenAPI specifications, here OAS v3.0.
+
+we will now add custom rules to automatically check the OpenAPI document meets our own internal standards.
 
 ## Step 4
 
+As an example, at Cisco we are using semantic versioning to track the lifecycle of OpenAPI documents.
+
 Let's now add a rule to check that the OpenAPI document does apply semantic versioning.
 
-**Run the command:**
+Please run the command:
 
 ```shell
 spectral lint step4.yaml --verbose --ruleset rulesets/semver.yaml 
 ```
 
-Let's check what the rule consists.
+A warning informs us that the version does not adhere to semver.
 
-**Open the file `rulesets/semver.yaml`**
+Let's check how we can create custom rules.
 
-Note that the rule has a severity of `warn`
+Please open the file `rulesets/semver.yaml`.
 
-Let's check if the command get an exit status of error.
+Note that the rule has a severity of `warning`
+
+Let's check if the command execution got an exit status of 'error' so that we could automatically detect this along our CI/CD pipeline.
 
 ```shell
 echo $? 
 ```
 
-The command did not fail because no issue with severity level of error was found.
+Nope, the command did not fail because no issue with a severity level of 'error' was found.
 
-**Change the rule severity to `error`**
+We have 2 options at this stage:
+1. consider that warning are failures: `spectral lint step4.yaml --verbose --ruleset rulesets/semver.yaml --fail-severity warn; echo ""; echo "exit status:" $?`
+2. or change the severity of the rule from warning to error: `spectral lint step4.yaml --verbose --ruleset rulesets/semver-error.yaml; echo ""; echo "exit status: "$?`
 
-**Run the commands**
-
-```shell
-spectral lint step4.yaml --verbose --ruleset rulesets/semver-error.yaml; echo "exit status:" $?
-```
-
-Now we are getting an exit status of 1
+Congrats, we are getting an exit status of 1 so that we can automatically reject non compliant OpenAPI documents.
 
 
 ## Step 5
 
-Let's fix the semantic version
+Let's fix the semantic version and see that a valid document would not be rejected.
 
-**Go to line 3 of the OpenAPI document and change the version number to `1.22.0-4521`**
+We have updated the version number to '1.22.0-4521' as shown with the command: `diff step4.yaml step5.yaml`.
 
-**And run the command again:**
+Please run the command:
 
 ```shell
 spectral lint step5.yaml --verbose --ruleset rulesets/semver-error.yaml; echo "exit status:" $? 
 ```
 
-The issue is now fixed!
+Perfect, the issue is now fixed!
 
-Note that there are now 53 rules being considered and 42 were applicable.
+> Note that there are now 53 rules being considered and 42 are  applicable for our OpenAPI document in version 3.0.
 
 
 ## Step 6
