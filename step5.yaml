@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   version: 1.22.0-4521
-  title: Compliance MiniDashboard API
+  title: MiniDashboard API
   description: >
     The MiniDashboard API is a modern REST API based on the OpenAPI
     specification. Date: September 9th. [Recent Updates](https://developer.cisco.com/api-insights)
