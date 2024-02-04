@@ -1,0 +1,8 @@
+
+cd /media/devnet/EC9F-B5F8
+
+cp install.sh ~/.local/bin
+
+chmod 755 ~/.local/bin/install.sh 
+
+install.sh

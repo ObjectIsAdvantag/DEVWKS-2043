@@ -16,8 +16,8 @@ You have cloned this repo and have checked that the 'spectral' and 'oasdiff' bin
 
 If some of the binaries are not yet installed, please proceed as describe below:
 
-- [Spectral CLI](https://docs.stoplight.io/docs/spectral/b8391e051b7d8-installation): `npm install -g @stoplight/spectral-cli`
-- [oasdiff CLI](https://github.com/Tufin/oasdiff?tab=readme-ov-file#install-on-macos-windows-and-linux): select the binary for your laptop and drop it on your path
+- [Spectral CLI](https://docs.stoplight.io/docs/spectral/b8391e051b7d8-installation): `sudo npm install -g @stoplight/spectral-cli`
+- [oasdiff CLI](https://github.com/Tufin/oasdiff/releases/): select the binary for your laptop and drop the binary on your path, such as: [oasdiff_1.10.6_linux_amd64.tar.gz](https://github.com/Tufin/oasdiff/releases/download/v1.10.6/oasdiff_1.10.6_linux_amd64.tar.gz) getting copied to `~/.local/bin`.
 
 
 ## Step 1
@@ -213,7 +213,7 @@ as documented here: https://github.com/Tufin/oasdiff/blob/main/BREAKING-CHANGES-
 Now what if you want to interrupt my CI/CD pipeline as soon as I detect a breaking change
 
 ```shell
-oasdiff breaking step7.yaml step8.yaml --fail-on ERR; echo "exit status:" $?
+oasdiff breaking step7.yaml step9.yaml --fail-on ERR; echo "exit status:" $?
 ```
 
 Congrats, you've successfully learnt to lint an OpenAPI document, customize an existing ruleset, create your own rule.
