@@ -24,7 +24,11 @@ Go to https://editor.swagger.io/
 
 Paste the `step1.yaml` contents into the editor
 
-Looks great... sure but this is manual. Let's do some automation now.
+Note that there are many OpenAPI renderer vendors available to you when ready to go, such as [StopLight Elements](https://elements-demo.stoplight.io/?spec=https://raw.githubusercontent.com/ObjectIsAdvantag/DEVWKS-2525/main/step1.yaml#/operations/getOrganization)
+
+Looks great... but this is manual eye screening for now whether the OpebAPI document is correct or not. 
+
+Let's now look into some automation opportunities...
 
 
 ## Step 2
