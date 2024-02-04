@@ -200,7 +200,7 @@ Engineering is asked to provide a new OpenAPI document which will reflect the ch
 
 The file comes back.
 
-Run the following command:
+Run the following command to check it meets internal standards:
 
 ```shell
 spectral lint step9.yaml --verbose --ruleset rulesets/cicd.yaml --format pretty
@@ -211,10 +211,13 @@ Looks good!
 Now you're asking yourself what has changed.
 You can either open the file and compare, use a diff tool and compare OR use an OpenAPI diff tool which will offer other benefits.
 
+
+## Step 10
+
 **Run the following command:**
 
 ```shell
-oasdiff changelog step7.yaml step9.yaml --format text
+oasdiff changelog step7.yaml step10.yaml --format text
 ```
  
 The output shows you the updates and spots a breaking change.
@@ -222,10 +225,15 @@ The output shows you the updates and spots a breaking change.
 In total it's more than 250 checks that are executed: `oasdiff checks | wc -l`
 as documented here: https://github.com/Tufin/oasdiff/blob/main/BREAKING-CHANGES-EXAMPLES.md
 
-Now what if you want to interrupt the CI/CD pipeline as soon as a breaking change is detected
+The exact breaking change is that a required property was added for the POST request: 
+ [StopLight Elements](https://elements-demo.stoplight.io/?spec=https://raw.githubusercontent.com/ObjectIsAdvantag/DEVWKS-2525/main/step10.yaml#/operations/putOrganization)
+
+Now what if you wanted to interrupt the CI/CD pipeline as soon as a breaking change is detected?
+
+Please type the command below:
 
 ```shell
-oasdiff breaking step7.yaml step9.yaml --fail-on ERR; echo "exit status:" $?
+oasdiff breaking step7.yaml step10.yaml --fail-on ERR; echo "exit status:" $?
 ```
 
 Congrats, you've successfully learnt to lint an OpenAPI document, customize an existing ruleset, create your own rule.
