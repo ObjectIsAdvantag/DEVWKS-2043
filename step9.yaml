@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: 1.24
+  version: 1.24.0-5136
   title: IncrementalSteps MiniDashboard API
   description: >
     The MiniDashboard API is a modern REST API based on the OpenAPI
@@ -379,6 +379,22 @@ paths:
                     cloud:
                       region:
                         name: North America
+        '400': 
+          description: Bad request
+        '401': 
+          description: Unauthorized
+        '403': 
+          description: Forbidden
+        '429': 
+          description: Too many requests
+        '500':
+          description: Internal service error
+        '502':
+          description: Bad gateway
+        '503':
+          description: Service unavailable
+        '504':
+          description: Gateway timeout
       tags:
         - configure
 

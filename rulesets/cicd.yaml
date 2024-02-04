@@ -1,0 +1,100 @@
+extends:
+  - [spectral:oas, off]
+  
+functions: [ensureField, completedSchema, keyMatchAnyPattern, includeAll]
+
+rules:
+
+  # https://docs.stoplight.io/docs/spectral/4dec24461f3af-open-api-rules#oas3-schema
+  oas3-schema: error
+
+  # https://docs.stoplight.io/docs/spectral/4dec24461f3af-open-api-rules#operation-operationid
+  operation-operationId: error 
+
+  # https://docs.stoplight.io/docs/spectral/4dec24461f3af-open-api-rules#operation-operationid-unique
+  operation-operationId-unique: error 
+
+  missing-schema-definition:
+    description: There is no schema attribute for a component.
+    message: '{{description}}; {{error}}'
+    severity: error
+    formats:
+      - oas3
+    given:
+      - >-
+        $.paths.*.*.responses[?(@property.match(/^[2]\d{2}$/i) &&
+        @property!=204)].content[*]
+      - $.*.*.*.requestBody.content[*]
+    then:
+      function: ensureField
+      functionOptions:
+        field: schema
+
+  general-schema-definition:
+    description: >-
+      Some of the defined schema use object as a final field when describing
+      their object structure.
+    message: '{{description}}; {{error}}'
+    severity: error
+    given:
+      - $.paths.*.*.*.*.content[?(@ && @.schema)].schema
+      - $.paths.*.*.*.content[?(@ && @.schema)].schema
+      - $.paths.*.*.responses[*].headers[?(@ && @.schema)].schema
+      - $.paths.*.*.parameters[?(@ && @.schema)].schema
+      - $.paths.*.*.responses[?(@ && @.schema)].schema
+      - $.paths.*.*.parameters[?(@ && @.schema && @.in === 'body')].schema
+    then:
+      - function: completedSchema
+
+  missing-returned-representation:
+    description: 2XX (except 204) responses must have a response schema defined
+    message: '{{description}}; {{error}}'
+    severity: error
+    formats:
+      - oas3
+    given:
+      - >-
+        $.paths.*.*.responses[?(@property.match(/^[2]\d{2}$/i) &&
+        @property!=204)].content[*]
+    then:
+      function: ensureField
+      functionOptions:
+        field: schema
+
+  success-status-code:
+    description: >-
+      For every operation in the OAS document, there should be at least one
+      success status code defined.  A successful status code is in the 1xx, 2xx
+      or 3xx range series, and generally a 200, 201 or 204.
+    message: '{{description}}; {{error}}'
+    severity: error
+    given: $.paths.*.*.responses
+    then:
+      function: keyMatchAnyPattern
+      functionOptions:
+        patterns:
+          - /^([123]\d{2}|default)$/
+
+  error-status-code:
+    description: There should be at least one error status code either 4xx or 5xx.
+    message: '{{description}}; {{error}}'
+    severity: warn
+    given: $.paths.*.*.responses
+    then:
+      function: keyMatchAnyPattern
+      functionOptions:
+        patterns:
+          - /^4\d{2}$/
+          - /^5\d{2}$/
+          - /^default$/
+          
+  semver:
+    severity: error
+    recommended: true
+    message: "OpenAPI document does not follow semantic versioning: {{value}} is not a valid version."
+    given: $.info.version
+    then:
+      function: pattern
+      functionOptions:
+        # from: https://gist.github.com/jhorsman/62eeea161a13b80e39f5249281e17c39 
+        match: "^([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+[0-9A-Za-z-]+)?$"

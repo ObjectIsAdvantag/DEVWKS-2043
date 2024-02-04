@@ -129,44 +129,72 @@ Perfect, the issue is now fixed!
 
 ## Step 6
 
-Let's now evaluate the quality of the API contract: incomplete definitions of responses contents, absence of error codes...
+Let's now evaluate the quality of the API contract: 
+- incomplete definitions for request or responses payloads
+- errors not documented
+- missing identifier for some operations
 
-**Type the commande below:**
+Please type the commande:
 
 ```shell
 spectral lint step6.yaml --verbose --ruleset rulesets/contract.yaml --format pretty
 ```
 
 There is 1 error identified and a warning showing 4 times.
-Let's look at these findings in details...
 
+Let's look at these findings in details:
+- [line 119](./step6.yaml#119): the response is not described
+- [line 114](./step6.yaml#147) and 3 others: there is no error defined
 
 ## Step 7
 
-Let's now evaluate the contract once we have made the fixes.
+We ask the team to make the necessary changes: `diff step6.yaml step7.yaml`
+
+Let's now evaluate the contract once we have made the fixes:
 
 ```shell
 spectral lint step7.yaml --verbose --ruleset rulesets/contract.yaml --format pretty
 ```
 
-The document is more verbose.
+> Note that the contract ruleset needs to go beyond the provided spectral function.
+
+In vscode, open the [contract.yaml](rulesets/contract.yaml) and observe the fnuctions that have been declared at the top. The functions are defined in the `/functions` folder.
+
+Let's now look into a real life example of an API lifecycle.
 
 
 ## Step 8
-
-Let's now look into the API lifecycle.
 
 A few weeks have passed and your own internal engineering or a vendor has delivered a new version of an API
 
 A new OpenAPI document is passed your way.
 
-First thing you want to do is to verify the quality of the document using your own toolchain
+First thing you want to do is to verify the quality of the document using your own toolchain that you have packaged into the ruleset `cicd.yaml`; it includes semantic versioning and contract completeness.
 
-**Run the following command:**
+Run the following command:
 
 ```shell
-spectral lint step8.yaml --verbose --ruleset rulesets/contract.yaml --format pretty
+spectral lint step8.yaml --verbose --ruleset rulesets/cicd.yaml --format pretty
 ```
+
+Spotted: 2 findings:
+1. the semantic versioning did not get correctly applied
+2. some errors were not declared for a new 'PUT' operation which has been added.
+
+Engineering is asked to provide a new OpenAPI document which will reflect the changes.
+
+
+## Step 9
+
+The file comes back.
+
+Run the following command:
+
+```shell
+spectral lint step9.yaml --verbose --ruleset rulesets/cicd.yaml --format pretty
+```
+
+Looks good!
 
 Now you're asking yourself what has changed.
 You can either open the file and compare, use a diff tool and compare OR use an OpenAPI diff tool which will offer other benefits.
@@ -174,7 +202,7 @@ You can either open the file and compare, use a diff tool and compare OR use an 
 **Run the following command:**
 
 ```shell
-oasdiff changelog step7.yaml step8.yaml --format html > changelog.html
+oasdiff changelog step7.yaml step9.yaml --format html > changelog.html
 ```
  
 The output shows you the updates and spots a breaking change.
