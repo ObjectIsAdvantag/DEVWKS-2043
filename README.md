@@ -1,13 +1,24 @@
 # Linting OpenAPI documents 
 
-## Pre-req
+## Before we start
+
+You have cloned this repo and checked the spectral and oasdiff binaries are installed on your laptop.
+
+`spectral --version` should return 6.11.0 or beyond.
+
+`oasdiff --version` should return 1.10.5 or later.
+
+`git clone https://github.com/ObjectIsAdvantag/DEVWKS-2525`
+
+`cd DEVWKS-2525`
+
+
+### Installing the CLIs
 
 The following tools are installed on your local machine
 
-- spectral CLI: https://docs.stoplight.io/docs/spectral/b8391e051b7d8-installation 
-- oasdiff: https://github.com/Tufin/oasdiff?tab=readme-ov-file#install-on-macos-windows-and-linux
-
-You have cloned this repo.
+- [Spectral CLI](https://docs.stoplight.io/docs/spectral/b8391e051b7d8-installation): `npm install -g @stoplight/spectral-cli`
+- [oasdiff CLI](https://github.com/Tufin/oasdiff?tab=readme-ov-file#install-on-macos-windows-and-linux): select the binary for your laptop and drop it on your path
 
 
 ## Step 1
@@ -172,3 +183,7 @@ Setting up Spectral in your CI pipeline: https://blog.stoplight.io/style-guides-
 
 oasdiff: use a GitHub action to check for breaking changes in the CI pipeline: https://www.oasdiff.com/github-action
 
+
+## Other Resources
+
+- OpenAPI utilities and demos: https://github.com/CiscoDevNet/OpenAPI_Demo
