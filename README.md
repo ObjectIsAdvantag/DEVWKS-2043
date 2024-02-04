@@ -42,9 +42,8 @@ Let's now look into some automation opportunities...
 
 ## Step 2
 
-We first want to check the syntax of the document is valid when considering the OpenAPI specifications.
-
-Pleae run the command below:
+We first want to check the syntax of the document is valid.
+Please run the command below:
 
 ```shell
 spectral lint step2.yaml --verbose --ruleset rulesets/spectral.yaml 
@@ -97,26 +96,36 @@ Please open the file `rulesets/semver.yaml`.
 
 Note that the rule has a severity of `warning`
 
-Let's check if the command execution got an exit status of 'error' so that we could automatically detect this along our CI/CD pipeline.
+Let's check if the command execution got an exit status of 'error' so that we could automatically detect this along our CI/CD pipeline?
 
 ```shell
 echo "exit status:" $?
 ```
 
-Nope, the command did not fail because no issue with a severity level of 'error' was found.
+It's a no. The command did NOT fail because the rule has a severity of 'warning' and not 'error'.
 
 We have 2 options at this stage:
-1. consider that warning are failures: `spectral lint step4.yaml --verbose --ruleset rulesets/semver.yaml --fail-severity warn; echo "exit status:" $?`
-2. or change the severity of the rule from warning to error: `spectral lint step4.yaml --verbose --ruleset rulesets/semver-error.yaml; echo "exit status: "$?`
 
-Congrats, we are getting an exit status of '1' so that we can automatically reject non compliant OpenAPI documents along our CI/CD pipelines.
+### Fail on warnings
+
+```shell
+spectral lint step4.yaml --verbose --ruleset rulesets/semver.yaml --fail-severity warn; echo "exit status:" $?
+```
+
+### Change the rule severity to 'error'
+
+```shell
+spectral lint step4.yaml --verbose --ruleset rulesets/semver-error.yaml; echo "exit status: "$?
+```
+
+Congrats, we are now getting an exit status of '1' so that we can automatically reject non compliant OpenAPI documents along our CI/CD pipelines.
 
 
 ## Step 5
 
 Let's now fix the semantic version and see that a valid document would not be rejected.
 
-We have updated the version number to '1.22.0-4521' as shown with the command: `diff step4.yaml step5.yaml`.
+We have updated the version number to '1.22.0-4521' as shown with `diff step4.yaml step5.yaml`.
 
 Please run the command:
 
