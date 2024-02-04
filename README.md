@@ -209,12 +209,13 @@ spectral lint step9.yaml --verbose --ruleset rulesets/cicd.yaml --format pretty
 Looks good!
 
 Now you're asking yourself what has changed.
-You can either open the file and compare, use a diff tool and compare OR use an OpenAPI diff tool which will offer other benefits.
 
 
 ## Step 10
 
-**Run the following command:**
+To evaluate API changes, we can use an OpenAPI diff tool such as oasdiff.
+
+Run the following command:
 
 ```shell
 oasdiff changelog step7.yaml step10.yaml --format text
@@ -226,7 +227,7 @@ In total it's more than 250 checks that are executed: `oasdiff checks | wc -l`
 as documented here: https://github.com/Tufin/oasdiff/blob/main/BREAKING-CHANGES-EXAMPLES.md
 
 The exact breaking change is that a required property was added for the POST request: 
- [StopLight Elements](https://elements-demo.stoplight.io/?spec=https://raw.githubusercontent.com/ObjectIsAdvantag/DEVWKS-2525/main/step10.yaml#/operations/putOrganization)
+ [StopLight Elements](https://elements-demo.stoplight.io/?spec=https://raw.githubusercontent.com/ObjectIsAdvantag/DEVWKS-2525/main/step10.yaml#/operations/createOrganization)
 
 Now what if you wanted to interrupt the CI/CD pipeline as soon as a breaking change is detected?
 
@@ -236,15 +237,18 @@ Please type the command below:
 oasdiff breaking step7.yaml step10.yaml --fail-on ERR; echo "exit status:" $?
 ```
 
-Congrats, you've successfully learnt to lint an OpenAPI document, customize an existing ruleset, create your own rule.
-You also learnt to generate changelogs and detect
+Congrats, you've successfully learnt to
+- lint an OpenAPI document, 
+- customize an existing ruleset and create your own rules,
+- generate API changelogs,
+- and detect breaking changes.
 
 
 ## Next Steps
 
-Setting up Spectral in your CI pipeline: https://blog.stoplight.io/style-guides-rulebook-series-automated-api-design-checks-in-ci
-
-oasdiff: use a GitHub action to check for breaking changes in the CI pipeline: https://www.oasdiff.com/github-action
+Setting up the tools in your CI/CD pipelines
+- spectral: https://blog.stoplight.io/style-guides-rulebook-series-automated-api-design-checks-in-ci
+- oasdiff: use a GitHub action to check for breaking changes in the CI pipeline: https://www.oasdiff.com/github-action
 
 
 ## Other Resources
