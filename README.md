@@ -7,7 +7,6 @@ You have cloned this repo and checked the spectral and oasdiff binaries are inst
 1. `git clone https://github.com/ObjectIsAdvantag/DEVWKS-2525`
 1. `spectral --version` should return 6.11.0 or beyond.
 1. `oasdiff --version` should return 1.10.5 or later.
-1. `cd DEVWKS-2525`
 
 
 ### Installing the CLIs
@@ -20,7 +19,13 @@ The following tools are installed on your local machine
 
 ## Step 1
 
-Go to https://editor.swagger.io/
+Please open Visual Studio Code 
+
+1. `cd DEVWKS-2525`
+1. `code .`
+
+
+Open https://editor.swagger.io/ in a Web browser
 
 Paste the `step1.yaml` contents into the editor
 
