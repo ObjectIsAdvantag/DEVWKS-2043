@@ -4,13 +4,10 @@
 
 You have cloned this repo and checked the spectral and oasdiff binaries are installed on your laptop.
 
-`spectral --version` should return 6.11.0 or beyond.
-
-`oasdiff --version` should return 1.10.5 or later.
-
-`git clone https://github.com/ObjectIsAdvantag/DEVWKS-2525`
-
-`cd DEVWKS-2525`
+1. `git clone https://github.com/ObjectIsAdvantag/DEVWKS-2525`
+1. `spectral --version` should return 6.11.0 or beyond.
+1. `oasdiff --version` should return 1.10.5 or later.
+1. `cd DEVWKS-2525`
 
 
 ### Installing the CLIs
