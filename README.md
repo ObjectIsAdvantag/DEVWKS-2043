@@ -1,6 +1,6 @@
 # Linting OpenAPI documents
 
-This instructor-led lab will take you from zero to automatically analyzing OpenAPI documents and integrating into your CI/CD pipelines.
+This instructor-led lab will take you from zero to automatically analyzing OpenAPI documents, generating API changelogs and spotting breaking changes if any.
 
 
 ## Before we start
@@ -147,7 +147,7 @@ spectral lint step5.yaml --verbose --ruleset rulesets/semver-error.yaml; echo "e
 
 Perfect, the issue is now fixed!
 
-> Note that there are now 53 rules being considered and 42 are  applicable for our OpenAPI document in version 3.0.
+> Note that there are now 53 rules being considered and 42 are applicable to our document in version 3.0 of the OpenAPI specifications. 
 
 
 ## Step 6
@@ -169,22 +169,29 @@ There is 1 error identified and a warning with 4 occurences.
 
 Let's look at these findings in details:
 - [line 119](step6.yaml#L119): the response is not described
-- [line 114](step6.yaml#L114) and 3 others: there is no error defined
+- [line 114](step6.yaml#L114) and 3 others: there is no error defined for the operation
 
 
 ## Step 7
 
-We ask the team to make the necessary changes: `diff step6.yaml step7.yaml`
+We ask the team to make the necessary changes. You can display the changes delivered by the team using this command: `diff step6.yaml step7.yaml`.
 
-Let's now evaluate the contract after these changes have been reflected:
+Let's evaluate the new completeness of the contract:
 
 ```shell
 spectral lint step7.yaml --verbose --ruleset rulesets/contract.yaml --format pretty
 ```
 
-> Note that the contract ruleset needs to go beyond the provided spectral function.
+![TODO]()
 
-In Visual Studio Code, open the [contract.yaml](rulesets/contract.yaml) and observe the fnuctions that have been declared at the top. The functions are defined in the `/functions` folder.
+Perfect, the OpenAPI document does not raise any errors any more.
+
+> Note that only 8 rules are now enabled out of 57 rules actually declared. 
+Let's look into the contract ruleset.
+
+In Visual Studio Code, open the [contract.yaml](rulesets/contract.yaml) and observe that:
+- the default OpenAPI validator ruleset of spectral has been disabled: `[spectral:oas, off]`. This lets us cherry pick only the rules we are interested in including to our ruleset such as `oas3-schema: error`. Moreover, doing so, we are also in capacity to over-ride the severity for each individual rule. 
+- several functions have been declared at the top: `[ensureField, completedSchema, keyMatchAnyPattern, includeAll]`. These custom functions are defined in the `/rulesets/functions` folder. They are used by several new rules that require custom logic such as `missing-schema-definition`.
 
 Let's now look into a real life example of an API lifecycle.
 
@@ -255,7 +262,7 @@ Please type the command below:
 oasdiff breaking step7.yaml step10.yaml --fail-on ERR; echo "exit status:" $?
 ```
 
-Congrats, you've successfully learnt to
+Congrats, you have successfully learnt to
 - lint an OpenAPI document, 
 - customize an existing ruleset and create your own rules,
 - generate API changelogs,
@@ -265,8 +272,8 @@ Congrats, you've successfully learnt to
 ## Next Steps
 
 Setting up the tools in your CI/CD pipelines
-- spectral: https://blog.stoplight.io/style-guides-rulebook-series-automated-api-design-checks-in-ci
-- oasdiff: use a GitHub action to check for breaking changes in the CI pipeline: https://www.oasdiff.com/github-action
+- `spectral`: https://blog.stoplight.io/style-guides-rulebook-series-automated-api-design-checks-in-ci
+- `oasdiff`: use a GitHub action to check for breaking changes in the CI pipeline: https://www.oasdiff.com/github-action
 
 
 ## Other Resources
