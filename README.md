@@ -182,9 +182,9 @@ Let's evaluate the new completeness of the contract:
 spectral lint step7.yaml --verbose --ruleset rulesets/contract.yaml --format pretty
 ```
 
-![TODO]()
+![spectral command output](/img/step7_command.png)
 
-Perfect, the OpenAPI document does not raise any errors any more.
+Perfect, the OpenAPI document does not raise errors any more.
 
 > Note that only 8 rules are now enabled out of 57 rules actually declared. 
 Let's look into the contract ruleset.

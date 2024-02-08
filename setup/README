@@ -1,4 +1,14 @@
+# Notes for instructors
 
+## Laptops Setup Instructions
+
+Customize the `install.sh` script for your own workshop labtops configuration.
+
+Copy the 3 files onto a USB Key or shared folder.
+
+Then open the folder on every laptop to configure and type the commands
+
+```shell
 cd /media/devnet/EC9F-B5F8
 
 cp install.sh ~/.local/bin
@@ -6,3 +16,18 @@ cp install.sh ~/.local/bin
 chmod 755 ~/.local/bin/install.sh 
 
 install.sh
+```
+
+> note that when starting the workshop, ask the audience to do a git pull to refresh their local copy of the repo to your latest edits.
+
+
+## Prepare your machine
+
+Change your shell prompt in order to maximize the command line visibile to the audience
+
+```shell
+PS1='\[\033[0;32m\]\h\[\033[0m\]$ '
+```
+
+
+
