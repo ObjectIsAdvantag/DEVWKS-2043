@@ -5,7 +5,7 @@ This instructor-led lab will take you from zero to automatically analyzing OpenA
 
 ## Before we start
 
-You have cloned this repo and have checked that the 'spectral' and 'oasdiff' binaries are available on your laptop:
+You have cloned this repo and have checked that the `spectral` and `oasdiff` binaries are available on your laptop:
 
 1. `git clone https://github.com/ObjectIsAdvantag/DEVWKS-2525`
 1. `spectral --version` should return 6.11.0 or beyond.
@@ -24,14 +24,10 @@ If some of the binaries are not yet installed, please proceed as describe below:
 
 Let's discover the OpenAPI document that we will use for automated checks along this lab.
 
-Please open Visual Studio Code 
-
-1. `cd DEVWKS-2525`
-1. `code .`
-
-Please open the file named `step1.yaml` and paste then contents.
-
-Now, open https://editor.swagger.io/ in a Web browser and paste the `step1.yaml` contents into the editor.
+1. Change directory to the newly-cloned repository directory: `cd DEVWKS-2525`
+1. Open the directory in Visual Studio Code with: `code .`
+1. Open the file named `step1.yaml` from the repository and copy the entire contents. 
+1. Now, open https://editor.swagger.io/ in a Web browser and paste the `step1.yaml` contents into the online editor.
 
 > Note that there are many OpenAPI renderer vendors available to you when ready to go, such as [StopLight Elements](https://elements-demo.stoplight.io/?spec=https://raw.githubusercontent.com/ObjectIsAdvantag/DEVWKS-2525/main/step1.yaml#/operations/getOrganization)
 
@@ -58,14 +54,14 @@ spectral lint step2.yaml --verbose --ruleset rulesets/spectral.yaml
 Let's look at the rule that is failing: ['operation-tag-defined'](
 https://docs.stoplight.io/docs/spectral/4dec24461f3af-open-api-rules#operation-tag-defined)
 
-Scroll down at the bottom of the step2.yaml file and note that the declaration of the tags have been commented.
+Scroll down to the bottom of the step2.yaml file and note that the declaration of the tags have been commented.
 
 ![OpenAPI document commented](/img/step2_openapi.png)
 
 
 ## Step 3
 
-Let's now run the command again against the step3.yaml file where the tags have been globally declared.
+Next, let's run the command again against the `step3.yaml` file where the tags have been globally declared. You can search for `tags` in the Visual Studio Code editor to see where these tags are placed and defined.
 
 Please run the command:
 
@@ -75,7 +71,7 @@ spectral lint step3.yaml --verbose --ruleset rulesets/spectral.yaml
 
 ![spectral command output](/img/step3_command.png)
 
-There are no more errors found by spectral.
+There are no more errors found by `spectral`.
 
 Cool! The OpenAPI document is valid against the OpenAPI specifications.
 
@@ -86,7 +82,7 @@ We will now add custom rules to automatically check that the OpenAPI document me
 
 As an example, at Cisco we are using semantic versioning to track the lifecycle of OpenAPI documents.
 
-Let's now add a rule to check that the OpenAPI document does apply semantic versioning.
+Let's now add a rule to check that the OpenAPI document does apply [semantic versioning](https://semver.org/).
 
 Please run the command:
 
@@ -96,17 +92,17 @@ spectral lint step4.yaml --verbose --ruleset rulesets/semver.yaml
 
 ![spectral command output](/img/step4_command.png)
 
-A warning informs us that the version does not adhere to semver.
+A warning informs us that the version does not adhere to semantic versioning.
 
 Let's check how we can create custom rules.
 
 Please open the file `rulesets/semver.yaml`.
 
-Note that the rule has a severity of `warning`
+Note that the rule has a severity of `warning` in line 7.
 
 ![semver rule](/img/step4_semver_rule.png)
 
-Let's check if the command execution got an exit status of 'error' so that we could automatically detect this along our CI/CD pipeline?
+Let's check if the command execution got an exit status of 'error' so that we could automatically detect this along our CI/CD pipeline.
 
 ```shell
 echo "exit status:" $?
@@ -143,6 +139,14 @@ Please run the command:
 
 ```shell
 spectral lint step5.yaml --verbose --ruleset rulesets/semver-error.yaml; echo "exit status:" $? 
+```
+
+In return:
+```shell
+Found 53 rules (42 enabled)
+Linting .../DEVWKS-2525/step5.yaml
+No results with a severity of 'error' found!
+exit status: 0
 ```
 
 Perfect, the issue is now fixed!
@@ -212,9 +216,9 @@ spectral lint step8.yaml --verbose --ruleset rulesets/cicd.yaml --format pretty
 
 ![spectral command output](/img/step8_command.png)
 
-Spotted! 2 findings here:
-1. the semantic versioning did not get correctly applied
-1. errors were not declared for the new 'PUT' operation
+Spotted! Two findings here:
+1. semantic versioning was not correctly applied in file `step8.yaml`
+1. errors are not declared for the new 'PUT' operation
 
 Engineering is asked to provide a new OpenAPI document which will reflect the changes.
 
@@ -229,14 +233,25 @@ Run the following command to check it meets internal standards:
 spectral lint step9.yaml --verbose --ruleset rulesets/cicd.yaml --format pretty
 ```
 
+In return:
+
+```shell
+Found 58 rules (9 enabled)
+Linting .../DEVWKS-2525/step9.yaml
+
+0 Unique Issue(s)
+✖
+No results with a severity of 'error' found!
+```
+
 Looks good!
 
-Now you're asking yourself what has changed.
+Now you're asking yourself what has changed through all of these iterations of the OpenAPI document. Let's move beyond a simple text diff next.
 
 
 ## Step 10
 
-To evaluate API changes, we can use an OpenAPI diff tool such as oasdiff.
+To evaluate API changes, we can use an OpenAPI diff tool such as `oasdiff`.
 
 Run the following command:
 
@@ -262,7 +277,7 @@ Please type the command below:
 oasdiff breaking step7.yaml step10.yaml --fail-on ERR; echo "exit status:" $?
 ```
 
-Congrats, you have successfully learnt to
+Congrats, you have successfully learned to
 - lint an OpenAPI document, 
 - customize an existing ruleset and create your own rules,
 - generate API changelogs,
