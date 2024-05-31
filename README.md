@@ -7,10 +7,10 @@ This instructor-led lab will take you from zero to automatically analyzing OpenA
 
 You have cloned this repo and have checked that the `spectral` and `oasdiff` binaries are available on your laptop:
 
-1. `git clone https://github.com/ObjectIsAdvantag/DEVWKS-2043`
 1. `spectral --version` should return 6.11.0 or beyond.
 1. `oasdiff --version` should return 1.10.5 or later.
-
+1. `git clone https://github.com/ObjectIsAdvantag/DEVWKS-2043`
+1. Change directory to the newly-cloned repository directory: `cd DEVWKS-2043`
 
 ### Installing the CLIs
 
@@ -24,7 +24,6 @@ If some of the binaries are not yet installed, please proceed as describe below:
 
 Let's discover the OpenAPI document that we will use for automated checks along this lab.
 
-1. Change directory to the newly-cloned repository directory: `cd DEVWKS-2043`
 1. Open the directory in Visual Studio Code with: `code .`
 1. Open the file named `step1.yaml` from the repository and copy the entire contents. 
 1. Now, open https://editor.swagger.io/ in a Web browser and paste the `step1.yaml` contents into the online editor.

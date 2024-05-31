@@ -1,0 +1,23 @@
+#!/bin/sh
+
+echo "Opening the workshop instructions"
+
+cmd.exe /C start https://github.com/ObjectIsAdvantag/DEVWKS-2043/blob/main/README.md#step-1 2>/dev/null
+
+echo "waiting 3 seconds to let the tabs open and show contents..."
+sleep 3
+echo "we are all set!"
+
+echo ""
+echo "Checking we are in the folder 'DEVWKS-2043' that we will use for the workshop..."
+# Get the name of the current working directory
+current_dir=$(basename "$PWD")
+
+# Check if the current directory is named "WKS"
+if [ "$current_dir" = "DEVWKS-2043" ]; then
+  echo "Perfect, you are already in the correct folder."
+else
+  echo "hum, it seems that we are not in the folder used for the workshop"
+  echo "please type the command below to join the 'DEVWKS-2043' folder:"
+  echo "   cd /home/devnet/DEVWKS-2043"
+fi

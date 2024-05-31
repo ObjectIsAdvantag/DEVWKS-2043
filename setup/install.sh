@@ -4,9 +4,9 @@ echo "copying oasdiff..."
 cp oasdiff ~/.local/bin
 chmod 755 ~/.local/bin/oasdiff
 
-echo "copying oas script..."
-cp oas ~/.local/bin
-chmod 755 ~/.local/bin/oas
+echo "copying workshop script..."
+cp workshop ~/.local/bin
+chmod 755 ~/.local/bin/workshop
 
 echo "installing spectral..."
 sudo npm install -g @stoplight/spectral-cli
