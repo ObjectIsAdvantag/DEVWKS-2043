@@ -7,7 +7,7 @@ This instructor-led lab will take you from zero to automatically analyzing OpenA
 
 You have cloned this repo and have checked that the `spectral` and `oasdiff` binaries are available on your laptop:
 
-1. `git clone https://github.com/ObjectIsAdvantag/DEVWKS-2525`
+1. `git clone https://github.com/ObjectIsAdvantag/DEVWKS-2043`
 1. `spectral --version` should return 6.11.0 or beyond.
 1. `oasdiff --version` should return 1.10.5 or later.
 
@@ -24,12 +24,12 @@ If some of the binaries are not yet installed, please proceed as describe below:
 
 Let's discover the OpenAPI document that we will use for automated checks along this lab.
 
-1. Change directory to the newly-cloned repository directory: `cd DEVWKS-2525`
+1. Change directory to the newly-cloned repository directory: `cd DEVWKS-2043`
 1. Open the directory in Visual Studio Code with: `code .`
 1. Open the file named `step1.yaml` from the repository and copy the entire contents. 
 1. Now, open https://editor.swagger.io/ in a Web browser and paste the `step1.yaml` contents into the online editor.
 
-> Note that there are many OpenAPI renderer vendors available to you when ready to go, such as [StopLight Elements](https://elements-demo.stoplight.io/?spec=https://raw.githubusercontent.com/ObjectIsAdvantag/DEVWKS-2525/main/step1.yaml#/operations/getOrganization)
+> Note that there are many OpenAPI renderer vendors available to you when ready to go, such as [StopLight Elements](https://elements-demo.stoplight.io/?spec=https://raw.githubusercontent.com/ObjectIsAdvantag/DEVWKS-2043/main/step1.yaml#/operations/getOrganization)
 
 Looks great... but this requires manual eye-screening of the yaml and rendered documentation to identify how complete and accurate is the OpenAPI document.
 
@@ -144,7 +144,7 @@ spectral lint step5.yaml --verbose --ruleset rulesets/semver-error.yaml; echo "e
 In return:
 ```shell
 Found 53 rules (42 enabled)
-Linting .../DEVWKS-2525/step5.yaml
+Linting .../DEVWKS-2043/step5.yaml
 No results with a severity of 'error' found!
 exit status: 0
 ```
@@ -237,7 +237,7 @@ In return:
 
 ```shell
 Found 58 rules (9 enabled)
-Linting .../DEVWKS-2525/step9.yaml
+Linting .../DEVWKS-2043/step9.yaml
 
 0 Unique Issue(s)
 ✖
@@ -267,7 +267,7 @@ In total it's more than 250 checks that are executed: `oasdiff checks | wc -l`
 as documented here: https://github.com/Tufin/oasdiff/blob/main/BREAKING-CHANGES-EXAMPLES.md
 
 The exact breaking change is that a required property was added for the POST request: 
- [StopLight Elements](https://elements-demo.stoplight.io/?spec=https://raw.githubusercontent.com/ObjectIsAdvantag/DEVWKS-2525/main/step10.yaml#/operations/createOrganization)
+ [StopLight Elements](https://elements-demo.stoplight.io/?spec=https://raw.githubusercontent.com/ObjectIsAdvantag/DEVWKS-2043/main/step10.yaml#/operations/createOrganization)
 
 Now what if you wanted to interrupt the CI/CD pipeline as soon as a breaking change is detected?
 

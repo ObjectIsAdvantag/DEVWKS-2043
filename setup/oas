@@ -2,7 +2,7 @@
 
 echo "opening tabs"
 
-open https://github.com/ObjectIsAdvantag/DEVWKS-2525/blob/main/README.md
+open https://github.com/ObjectIsAdvantag/DEVWKS-2043/blob/main/README.md
 
 open https://editor.swagger.io/
 
@@ -12,6 +12,6 @@ sleep 2
 clear
 
 echo "please join the workshop folder with:"
-echo "cd /home/devnet/DEVWKS-2525"
+echo "cd /home/devnet/DEVWKS-2043"
 
 

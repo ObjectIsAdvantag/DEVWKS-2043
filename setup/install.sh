@@ -12,4 +12,4 @@ echo "installing spectral..."
 sudo npm install -g @stoplight/spectral-cli
 
 echo "cloning git repo..."
-cd && git clone https://github.com/ObjectIsAdvantag/DEVWKS-2525
+cd && git clone https://github.com/ObjectIsAdvantag/DEVWKS-2043
