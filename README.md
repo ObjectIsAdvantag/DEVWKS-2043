@@ -7,8 +7,8 @@ This instructor-led lab will take you from zero to automatically analyzing OpenA
 
 You have cloned this repo and have checked that the `spectral` and `oasdiff` binaries are available on your laptop:
 
-1. `spectral --version` should return 6.11.0 or beyond.
-1. `oasdiff --version` should return 1.10.5 or later.
+1. `spectral --version` should return 6.11.1 or beyond
+1. `oasdiff --version` should return 1.10.16 or later
 1. `git clone https://github.com/ObjectIsAdvantag/DEVWKS-2043`
 1. Change directory to the newly-cloned repository directory: `cd DEVWKS-2043`
 
