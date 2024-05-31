@@ -132,7 +132,11 @@ Congrats, we are now getting an exit status of '1' so that we can automatically 
 
 Let's now fix the semantic version and see that a valid document would not be rejected.
 
-We have updated the version number to '1.22.0-4521' as shown with `diff step4.yaml step5.yaml`.
+We have updated the version number to '1.22.0-4521' as shown using the command:
+
+```shell
+diff step4.yaml step5.yaml
+```
 
 Please run the command:
 
@@ -177,7 +181,11 @@ Let's look at these findings in details:
 
 ## Step 7
 
-We ask the team to make the necessary changes. You can display the changes delivered by the team using this command: `diff step6.yaml step7.yaml`.
+We ask the team to make the necessary changes. You can display the changes delivered by the team using this command: 
+
+```shell
+diff step6.yaml step7.yaml
+```
 
 Let's evaluate the new completeness of the contract:
 
