@@ -187,7 +187,7 @@ If you have a specific use case or need help creating an overlay, feel free to p
 Let's now have GenAI generate an overlay
 
 ```YOU
-
+Could you generate an overlay that would take the original yaml I provided when we started this chat session, and that would generate when applied the fully consistent yaml you have provided and that I scored as perfect.
 ```
 
 
@@ -195,7 +195,7 @@ Let's now have GenAI generate an overlay
 Sure! Let's create an overlay that modifies the original OpenAPI YAML document you provided to produce the final, fully consistent YAML document.
 
 ...
-see
+see genai_overlay_AtoB.yaml
 ...
 
 This overlay document defines the changes needed to transform the original OpenAPI YAML to the final, consistent version. The overlay includes updates to descriptions, summaries, and other details to ensure the final output matches the specifications.
@@ -239,12 +239,13 @@ NOTE: You’ve reached your GPT-4o limit.
 Responses will use GPT-3.5 until your limit resets after 5:19 PM
 ```
 
+
 ## Enriched prompt with corporate rules
 
-IN PROGRESS 
+IN PROGRESS (hit free quota limit)
 
 Let's now come back to compliance.
-In a new chat session
+In a new chat session...
 
 TODO: provide a few rules for:
 - consistency in descriptions
