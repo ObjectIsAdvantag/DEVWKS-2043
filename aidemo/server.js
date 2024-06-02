@@ -6,15 +6,19 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
-// Enable CORS
+// Enable CORS with preflight options
 app.use(cors());
+app.options('*', cors());
 
 // Middleware to parse JSON request bodies
 app.use(bodyParser.json());
 
-// Middleware to set the API key
-app.use((req, res, next) => {
-    if (req.headers['x-mini-dashboard-api-key'] !== 'YOUR_API_KEY') {
+// Sample API key for demonstration purposes
+const apiKey = 'YOUR_API_KEY';
+
+// Middleware to set the API key for API routes only
+app.use('/api', (req, res, next) => {
+    if (req.headers['x-mini-dashboard-api-key'] !== apiKey) {
         return res.status(403).send('Forbidden');
     }
     next();

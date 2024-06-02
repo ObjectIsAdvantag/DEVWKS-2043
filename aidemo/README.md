@@ -66,6 +66,27 @@ let's fix this.
 when running the code I am encountering an issue with CORS, could you add code to the API server so that it returns the HTML page, I guess this will solve my issue.
 ```
 
+Still encountering an issue with implementation 2
+Asking for a fix
+
+```You
+I am still getting a CORS error. Here is the exact error: "403 Forbidden', strict-origin-when-cross-origin
+
+ Could you troubleshoot why given that I followed the instructions you proposed.
+```
+
+Still encountering a CORS issue.
+Asking for yet another fix.
+
+```You
+The CORS error is still present. I believe it's because access to the root path '/' is protected. The middleware that sets the API key should instead be protecting access to '/api' and below. Could you confirm and provide an update for the server code.
+```
+
+Made it ;-)
+
+
+
+
 
 
 
