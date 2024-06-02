@@ -2,6 +2,26 @@
 
 This instructor-led lab will take you from zero to automatically analyzing OpenAPI documents, generating API changelogs and spotting breaking changes if any.
 
+<!-- toc -->
+
+- [Before we start](#before-we-start)
+  * [Installing the CLIs](#installing-the-clis)
+- [Step 1](#step-1)
+- [Step 2](#step-2)
+- [Step 3](#step-3)
+- [Step 4](#step-4)
+  * [Fail on warnings](#fail-on-warnings)
+  * [Change the rule severity to 'error'](#change-the-rule-severity-to-error)
+- [Step 5](#step-5)
+- [Step 6](#step-6)
+- [Step 7](#step-7)
+- [Step 8](#step-8)
+- [Step 9](#step-9)
+- [Step 10](#step-10)
+- [Next Steps](#next-steps)
+- [Other Resources](#other-resources)
+
+<!-- tocstop -->
 
 ## Before we start
 

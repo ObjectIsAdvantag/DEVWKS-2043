@@ -1,0 +1,160 @@
+overlay: true
+
+tags:
+  - name: read
+    description: Operations related to reading data
+  - name: configure
+    description: Operations related to configuring data
+
+paths:
+  /organizations:
+    get:
+      summary: List organizations
+      description: Retrieve a list of organizations that the user has privileges on whitelist.
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  properties:
+                    api:
+                      properties:
+                        enabled:
+                          description: Enable API access
+                      description: API related settings
+                    cloud:
+                      properties:
+                        region:
+                          properties:
+                            name:
+                              description: Name of region
+                          description: Region info
+                      description: Data for this organization
+                    licensing:
+                      properties:
+                        model:
+                          description: >-
+                            Organization licensing model. Can be 'co-term',
+                            'per-device', or 'subscription'.
+                      description: Licensing related settings
+                    name:
+                      description: Organization name
+                    id:
+                      description: Organization ID
+                    url:
+                      description: Organization URL
+              examples:
+                response:
+                  value:
+                    - api:
+                        enabled: true
+                      cloud:
+                        region:
+                          name: North America
+                      licensing:
+                        model: co-term
+                      name: My organization
+                      id: '2930418'
+                      url: >-
+                        https://dashboard.mini.com/o/VjjsAd/manage/organization/overview
+
+    post:
+      summary: Create a new organization
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                properties:
+                  api:
+                    properties:
+                      enabled:
+                        description: Enable API access
+                  cloud:
+                    properties:
+                      region:
+                        properties:
+                          name:
+                            description: Name of region
+                    description: Data for this organization
+                  licensing:
+                    properties:
+                      model:
+                        description: >-
+                          Organization licensing model. Can be 'co-term',
+                          'per-device', or 'subscription'.
+                  name:
+                    description: Organization name
+                  id:
+                    description: Organization ID
+                  url:
+                    description: Organization URL
+              examples:
+                successResponse:
+                  value:
+                    api:
+                      enabled: true
+                    cloud:
+                      region:
+                        name: North America
+                    licensing:
+                      model: co-term
+                    name: My organization
+                    id: '2930418'
+                    url: >-
+                      https://dashboard.mini.com/o/VjjsAd/manage/organization/overview
+
+  /organizations/{organizationId}:
+    get:
+      summary: Return an organization
+      description: Retrieve details of a specific organization by ID.
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  api:
+                    properties:
+                      enabled:
+                        description: Enable API access
+                    description: API related settings
+                  cloud:
+                    properties:
+                      region:
+                        properties:
+                          name:
+                            description: Name of region
+                    description: Data for this organization
+                  licensing:
+                    properties:
+                      model:
+                        description: >-
+                          Organization licensing model. Can be 'co-term',
+                          'per-device', or 'subscription'.
+                    description: Licensing related settings
+                  name:
+                    description: Organization name
+                  id:
+                    description: Organization ID
+                  url:
+                    description: Organization URL
+              examples:
+                response:
+                  value:
+                    api:
+                      enabled: true
+                    cloud:
+                      region:
+                        name: North America
+                    licensing:
+                      model: co-term
+                    name: My organization
+                    id: '2930418'
+                    url: >-
+                      https://dashboard.mini.com/o/VjjsAd/manage/organization/overview
+
+    delete:
+      summary: Delete an organization
+      description: Delete an organization by ID.
