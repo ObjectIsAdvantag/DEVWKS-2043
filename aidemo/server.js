@@ -1,9 +1,29 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+const path = require('path');
+
 const app = express();
 const port = 3000;
 
+// Enable CORS
+app.use(cors());
+
+// Middleware to parse JSON request bodies
 app.use(bodyParser.json());
+
+// Middleware to set the API key
+app.use((req, res, next) => {
+    if (req.headers['x-mini-dashboard-api-key'] !== 'YOUR_API_KEY') {
+        return res.status(403).send('Forbidden');
+    }
+    next();
+});
+
+// Serve the HTML page
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 let organizations = [
     {
@@ -15,14 +35,6 @@ let organizations = [
         cloud: { region: { name: 'North America' } }
     }
 ];
-
-// Middleware to set the API key
-app.use((req, res, next) => {
-    if (req.headers['x-mini-dashboard-api-key'] !== 'YOUR_API_KEY') {
-        return res.status(403).send('Forbidden');
-    }
-    next();
-});
 
 // List organizations
 app.get('/api/v1/organizations', (req, res) => {
