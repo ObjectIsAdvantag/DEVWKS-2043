@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniDashboard API - Organization Selector</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .organization-details {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Select an Organization</h1>
+        <div class="form-group">
+            <label for="organization-select">Organizations</label>
+            <select id="organization-select">
+                <option value="">Select an organization</option>
+            </select>
+        </div>
+        <div id="organization-details" class="organization-details" style="display: none;">
+            <h2>Organization Details</h2>
+            <p><strong>ID:</strong> <span id="org-id"></span></p>
+            <p><strong>Name:</strong> <span id="org-name"></span></p>
+            <p><strong>URL:</strong> <span id="org-url"></span></p>
+            <p><strong>API Enabled:</strong> <span id="org-api-enabled"></span></p>
+            <p><strong>Licensing Model:</strong> <span id="org-licensing-model"></span></p>
+            <p><strong>Region Name:</strong> <span id="org-region-name"></span></p>
+        </div>
+    </div>
+
+    <script>
+        //const apiUrl = 'https://api.mini.com/api/v1';
+        const apiUrl = 'http://localhost:3000';
+        const apiKey = 'YOUR_API_KEY'; // Replace with your actual API key
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchOrganizations();
+
+            document.getElementById('organization-select').addEventListener('change', function() {
+                const organizationId = this.value;
+                if (organizationId) {
+                    fetchOrganizationDetails(organizationId);
+                } else {
+                    document.getElementById('organization-details').style.display = 'none';
+                }
+            });
+        });
+
+        function fetchOrganizations() {
+            fetch(`${apiUrl}/organizations`, {
+                headers: {
+                    'X-Mini-Dashboard-API-Key': apiKey
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById('organization-select');
+                data.forEach(org => {
+                    const option = document.createElement('option');
+                    option.value = org.id;
+                    option.textContent = org.name;
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching organizations:', error));
+        }
+
+        function fetchOrganizationDetails(organizationId) {
+            fetch(`${apiUrl}/organizations/${organizationId}`, {
+                headers: {
+                    'X-Mini-Dashboard-API-Key': apiKey
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('org-id').textContent = data.id;
+                document.getElementById('org-name').textContent = data.name;
+                document.getElementById('org-url').textContent = data.url;
+                document.getElementById('org-api-enabled').textContent = data.api.enabled ? 'Yes' : 'No';
+                document.getElementById('org-licensing-model').textContent = data.licensing.model;
+                document.getElementById('org-region-name').textContent = data.cloud.region.name;
+                document.getElementById('organization-details').style.display = 'block';
+            })
+            .catch(error => console.error('Error fetching organization details:', error));
+        }
+    </script>
+</body>
+</html>
