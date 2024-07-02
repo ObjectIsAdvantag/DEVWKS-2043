@@ -1,6 +1,6 @@
 # Linting OpenAPI documents
 
-This instructor-led lab will take you from zero to automatically analyzing OpenAPI documents, generating API changelogs and spotting breaking changes if any.
+This instructor-led lab will take you from Zero to analyzing OpenAPI documents with 'spectral' , generating API changelogs using 'oasdiff' and identifying breaking changes if any.
 
 <!-- toc -->
 
